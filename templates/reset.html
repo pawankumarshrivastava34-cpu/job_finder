@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reset Password</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+</head>
+<body>
+    <style>
+        
+/* =========================
+   RESET
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial;
+}
+
+/* =========================
+   BODY
+========================= */
+body {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+
+    padding: 15px;
+}
+
+/* =========================
+   CARD
+========================= */
+.card {
+    width: 100%;
+    max-width: 380px;
+
+    padding: 25px;
+    text-align: center;
+
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+    color: white;
+
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* TITLE */
+.card h2 {
+    color: #00c6ff;
+    margin-bottom: 10px;
+}
+
+/* TEXT */
+.card p {
+    color: #ccc;
+    font-size: 14px;
+}
+
+/* =========================
+   INPUT
+========================= */
+.card input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+
+    border: none;
+    border-radius: 8px;
+
+    outline: none;
+    font-size: 14px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.card button {
+    width: 100%;
+    padding: 12px;
+
+    background: #00c6ff;
+    border: none;
+    border-radius: 8px;
+
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.card button:hover {
+    background: #0072ff;
+    color: white;
+}
+
+/* =========================
+   ANIMATION
+========================= */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* =========================
+   📱 MOBILE
+========================= */
+@media (max-width: 480px) {
+
+    body {
+        align-items: flex-start;
+    }
+
+    .card {
+        margin-top: 50px;
+        max-width: 100%;
+        border-radius: 10px;
+    }
+}
+    </style>
+
+<div class="card">
+    <h2>🔒 Reset Password</h2>
+    <p>Enter new password</p>
+
+    <form method="POST" action="/reset">
+        <input type="password" name="password" id="pass1" placeholder="New Password" required>
+        <input type="password" name="password" id="pass2" placeholder="Confirm Password" required>
+        <button type="submit">Reset Password</button>
+    </form>
+</div>
+
+    <script>
+document.querySelector("form").addEventListener("submit", function(e){
+
+    let p1 = document.getElementById("pass1").value;
+    let p2 = document.getElementById("pass2").value;
+
+    if(p1 !== p2){
+        e.preventDefault();
+        alert("❌ Passwords do not match!");
+    }
+
+});
+
+</script>
+
+</body>
+</html>

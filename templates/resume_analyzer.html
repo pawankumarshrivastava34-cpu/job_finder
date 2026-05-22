@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+
+    <title>Resume Analyzer</title>
+
+    <style>
+
+        body{
+            background:#0f172a;
+            color:white;
+            font-family:Arial;
+            padding:30px;
+        }
+
+        h1{
+            color:#38bdf8;
+        }
+
+        input{
+            margin-top:15px;
+        }
+
+        button{
+            margin-top:10px;
+            padding:12px 20px;
+            background:#38bdf8;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            font-weight:bold;
+        }
+
+        .result{
+            margin-top:25px;
+            background:#1e293b;
+            padding:20px;
+            border-radius:15px;
+            line-height:1.8;
+        }
+
+        .result-box{
+
+    margin-top:20px;
+    background:#1e293b;
+    padding:20px;
+    border-radius:15px;
+    line-height:1.8;
+    white-space:normal;
+}
+
+/* ================= BACK BUTTON PRO ================= */
+
+.back-btn{
+
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    padding:12px 18px;
+
+    border-radius:14px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    color:#e2e8f0;
+
+    background:rgba(255,255,255,0.05);
+
+    border:1px solid rgba(255,255,255,0.1);
+
+    backdrop-filter:blur(12px);
+
+    transition:0.3s ease;
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* ================= HOVER EFFECT ================= */
+
+.back-btn:hover{
+
+    transform:translateY(-3px);
+
+    color:#ffffff;
+
+    background:linear-gradient(
+        135deg,
+        rgba(0,217,255,0.25),
+        rgba(56,189,248,0.15)
+    );
+
+    box-shadow:0 10px 25px rgba(0,217,255,0.25);
+}
+
+/* ================= ANIMATED GLOW BORDER ================= */
+
+.back-btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-2px;
+    left:-2px;
+    right:-2px;
+    bottom:-2px;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #00d9ff,
+        transparent
+    );
+
+    transform:translateX(-100%);
+
+    transition:0.6s;
+}
+
+.back-btn:hover::before{
+
+    transform:translateX(100%);
+}
+
+/* ================= CLICK EFFECT ================= */
+
+.back-btn:active{
+
+    transform:scale(0.95);
+}
+/* ================= FILE INPUT PRO DESIGN ================= */
+
+input[type="file"]{
+
+    width:100%;
+
+    padding:12px;
+
+    color:#e2e8f0;
+
+    background:rgba(255,255,255,0.05);
+
+    border:1px solid rgba(255,255,255,0.1);
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(10px);
+
+    transition:0.3s ease;
+}
+
+/* FILE BUTTON STYLE (Chrome/Edge) */
+
+input[type="file"]::file-selector-button{
+
+    padding:10px 16px;
+
+    border:none;
+
+    border-radius:10px;
+
+    margin-right:12px;
+
+    background:linear-gradient(135deg,#00d9ff,#38bdf8);
+
+    color:#02131d;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s ease;
+}
+
+/* HOVER EFFECT */
+
+input[type="file"]::file-selector-button:hover{
+
+    transform:scale(1.05);
+
+    box-shadow:0 0 15px rgba(0,217,255,0.4);
+}
+
+/* INPUT HOVER */
+
+input[type="file"]:hover{
+
+    border-color:#00d9ff;
+    box-shadow:0 0 15px rgba(0,217,255,0.15);
+}
+
+    </style>
+
+</head>
+
+<body>
+<a href="/" class="back-btn">⬅ Home</a>
+    <h1>📄 AI Resume Analyzer (PDF)</h1>
+
+    <form method="POST"  enctype="multipart/form-data">
+
+        <input type="file" name="resume_pdf" accept=".pdf" required>
+
+        <br>
+
+        <button type="submit">Analyze Resume</button>
+
+    </form>
+
+    {% if result %}
+
+   <div class="result-box">
+    {{ result | replace('\n', '<br>') | safe }}
+</div>
+
+    {% endif %}
+
+</body>
+</html>

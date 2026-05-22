@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Pawan AI Chatbot</title>
+
+    <link rel="icon"
+    type="image/png"
+    href="{{ url_for('static', filename='logo.png') }}">
+
+<style>
+
+/* ===================================================
+   GLOBAL
+=================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+/* ===================================================
+   FIX CHAT CUTTING ISSUE
+=================================================== */
+
+body{
+
+    background:#0f0f0f;
+
+    color:white;
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+    overflow-y:auto;
+}
+
+/* ===================================================
+   CHAT BOX FIX
+=================================================== */
+
+.chat-box{
+
+    height:calc(100vh - 150px);
+
+    overflow-y:auto;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+    padding:10px 10px 120px 10px;
+}
+
+/* ===================================================
+   FORM FIX
+=================================================== */
+
+.chat-form{
+
+    width:100%;
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    padding:15px;
+
+    background:#0f0f0f;
+
+    z-index:999;
+}
+
+/* ===================================================
+   MOBILE FIX
+=================================================== */
+
+@media(max-width:768px){
+
+    body{
+
+        overflow-x:hidden;
+
+        overflow-y:auto;
+    }
+
+    .chat-box{
+
+        height:calc(100vh - 135px);
+
+        padding-bottom:110px;
+    }
+}
+
+/* ===================================================
+   NAVBAR
+=================================================== */
+
+.chat-navbar{
+
+    width:100%;
+
+    padding:15px 20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:#181818;
+
+    border-bottom:
+    1px solid rgba(255,255,255,0.06);
+}
+
+.chat-logo{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    color:white;
+
+    white-space:nowrap;
+}
+
+.back-btn{
+
+    text-decoration:none;
+
+    color:white;
+
+    background:#242424;
+
+    padding:10px 16px;
+
+    border-radius:10px;
+
+    transition:0.3s;
+}
+
+.back-btn:hover{
+
+    background:#333;
+}
+
+/* ===================================================
+   CHAT CONTAINER
+=================================================== */
+
+.chat-container{
+
+    width:100%;
+
+    max-width:1000px;
+
+    margin:auto;
+
+    padding:15px;
+}
+
+/* ===================================================
+   CHAT BOX
+=================================================== */
+
+.chat-box{
+
+    height:calc(100vh - 170px);
+
+    overflow-y:auto;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+    padding:10px;
+}
+
+/* ===================================================
+   USER MESSAGE
+=================================================== */
+
+.user-msg{
+
+    align-self:flex-end;
+
+    max-width:75%;
+
+    padding:15px 18px;
+
+    border-radius:
+    18px 18px 5px 18px;
+
+    background:#19c37d;
+
+    color:black;
+
+    line-height:1.7;
+
+    font-size:15px;
+}
+
+/* ===================================================
+   AI MESSAGE
+=================================================== */
+
+.ai-msg{
+
+    align-self:flex-start;
+
+    max-width:75%;
+
+    padding:15px 18px;
+
+    border-radius:
+    18px 18px 18px 5px;
+
+    background:#1f1f1f;
+
+    border:
+    1px solid rgba(255,255,255,0.05);
+
+    color:#f1f1f1;
+
+    line-height:1.8;
+
+    font-size:15px;
+}
+
+/* ===================================================
+   FORM
+=================================================== */
+
+.chat-form{
+
+    width:100%;
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    padding:15px;
+
+    background:#0f0f0f;
+}
+
+/* ===================================================
+   INPUT AREA
+=================================================== */
+
+.input-area{
+
+    max-width:900px;
+
+    margin:auto;
+
+    position:relative;
+}
+
+.input-area input{
+
+    width:100%;
+
+    padding:
+    16px 105px 16px 16px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:14px;
+
+    background:#1f1f1f;
+
+    color:white;
+
+    font-size:15px;
+
+    border:
+    1px solid rgba(255,255,255,0.06);
+}
+
+.input-area input::placeholder{
+
+    color:#888;
+}
+
+.input-area input:focus{
+
+    border:
+    1px solid #19c37d;
+}
+
+/* ===================================================
+   MIC BUTTON
+=================================================== */
+
+.mic-btn{
+
+    position:absolute;
+
+    right:55px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:40px;
+    height:40px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2a2a2a;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.mic-btn:hover{
+
+    background:#3a3a3a;
+}
+
+/* ===================================================
+   SEND BUTTON
+=================================================== */
+
+.send-btn{
+
+    position:absolute;
+
+    right:8px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:40px;
+    height:40px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#19c37d;
+
+    color:black;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.send-btn:hover{
+
+    opacity:0.9;
+}
+
+/* ===================================================
+   SCROLLBAR
+=================================================== */
+
+.chat-box::-webkit-scrollbar{
+
+    width:6px;
+}
+
+.chat-box::-webkit-scrollbar-thumb{
+
+    background:#333;
+
+    border-radius:20px;
+}
+
+/* ===================================================
+   MOBILE RESPONSIVE
+=================================================== */
+
+@media(max-width:768px){
+
+    .chat-navbar{
+
+        padding:12px 14px;
+    }
+
+    .chat-logo{
+
+        font-size:18px;
+    }
+
+    .back-btn{
+
+        padding:8px 12px;
+
+        font-size:13px;
+    }
+
+    .chat-container{
+
+        padding:8px;
+    }
+
+    .chat-box{
+
+        height:calc(100vh - 150px);
+
+        gap:14px;
+    }
+
+    .user-msg,
+    .ai-msg{
+
+        max-width:90%;
+
+        font-size:14px;
+
+        padding:13px 15px;
+    }
+
+    .chat-form{
+
+        padding:10px;
+    }
+
+    .input-area input{
+
+        padding:
+        14px 95px 14px 14px;
+
+        font-size:14px;
+    }
+
+    .mic-btn,
+    .send-btn{
+
+        width:36px;
+        height:36px;
+    }
+
+    .mic-btn{
+
+        right:50px;
+    }
+}
+
+/* ===================================================
+   PREMIUM LOGO EFFECT
+=================================================== */
+
+.chat-logo{
+
+    position:relative;
+
+    font-size:26px;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+}
+
+.chat-logo span{
+
+    background:
+    linear-gradient(
+        90deg,
+        #19c37d,
+        #00ffcc,
+        #19c37d
+    );
+
+    background-size:200%;
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    animation:logoMove 4s linear infinite;
+
+    position:relative;
+}
+
+/* GLOW EFFECT */
+
+.chat-logo span::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    bottom:-6px;
+
+    width:100%;
+    height:3px;
+
+    border-radius:20px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #19c37d,
+        #00ffcc
+    );
+
+    animation:lineGlow 2s linear infinite;
+}
+
+/* TEXT ANIMATION */
+
+@keyframes logoMove{
+
+    0%{
+        background-position:0%;
+    }
+
+    100%{
+        background-position:200%;
+    }
+}
+
+/* LINE EFFECT */
+
+@keyframes lineGlow{
+
+    0%{
+        opacity:0.4;
+        transform:scaleX(0.7);
+    }
+
+    50%{
+        opacity:1;
+        transform:scaleX(1);
+    }
+
+    100%{
+        opacity:0.4;
+        transform:scaleX(0.7);
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .chat-logo{
+
+        font-size:18px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<div class="chat-navbar">
+
+    <a href="/" class="back-btn">
+        ⬅ Home
+    </a>
+
+    <div class="chat-logo">
+        🤖 Pawan AI Chatbot
+    </div>
+
+</div>
+
+<!-- ================= CHAT AREA ================= -->
+
+<div class="chat-container">
+
+    <div class="chat-box"
+    id="chatBox">
+
+        {% for chat in chat_history %}
+
+        <div class="user-msg">
+            {{ chat.user }}
+        </div>
+
+        <div class="ai-msg">
+            {{ chat.bot | replace('\n', '<br>') | safe }}
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- ================= INPUT ================= -->
+
+<form method="POST"
+class="chat-form">
+
+    <div class="input-area">
+
+        <input
+        type="text"
+        id="messageInput"
+        name="message"
+        placeholder="Message Pawan AI..."
+        required>
+
+        <!-- MIC -->
+
+        <button
+        type="button"
+        class="mic-btn"
+        onclick="startVoice()">
+
+            🎤
+
+        </button>
+
+        <!-- SEND -->
+
+        <button
+        type="submit"
+        class="send-btn">
+
+            ➤
+
+        </button>
+
+    </div>
+
+</form>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+/* ===================================================
+   AUTO SCROLL
+=================================================== */
+
+const chatBox =
+document.querySelector(".chat-box");
+
+chatBox.scrollTop =
+chatBox.scrollHeight;
+
+/* ===================================================
+   FORM SUBMIT
+=================================================== */
+
+const form =
+document.querySelector(".chat-form");
+
+const sendBtn =
+document.querySelector(".send-btn");
+
+form.addEventListener("submit", ()=>{
+
+    sendBtn.innerHTML = "...";
+
+    sendBtn.disabled = true;
+});
+
+/* ===================================================
+   CLEAR CHAT
+=================================================== */
+
+window.addEventListener(
+"beforeunload",
+function(){
+
+    navigator.sendBeacon("/clear-chat");
+});
+
+/* ===================================================
+   VOICE RECOGNITION
+=================================================== */
+
+function startVoice(){
+
+    const micBtn =
+    document.querySelector(".mic-btn");
+
+    const input =
+    document.getElementById("messageInput");
+
+    if(
+        !('webkitSpeechRecognition' in window) &&
+        !('SpeechRecognition' in window)
+    ){
+
+        alert(
+        "Voice recognition not supported");
+
+        return;
+    }
+
+    const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+    const recognition =
+    new SpeechRecognition();
+
+    recognition.lang = "en-IN";
+
+    recognition.start();
+
+    micBtn.innerHTML = "🔴";
+
+    recognition.onresult =
+    function(event){
+
+        input.value =
+        event.results[0][0].transcript;
+
+        form.submit();
+    };
+
+    recognition.onend =
+    function(){
+
+        micBtn.innerHTML = "🎤";
+    };
+
+    recognition.onerror =
+    function(){
+
+        micBtn.innerHTML = "🎤";
+
+        alert("Mic error");
+    };
+}
+
+</script>
+
+</body>
+</html>

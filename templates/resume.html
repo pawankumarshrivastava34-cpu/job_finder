@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Builder</title>
+
+<style>
+
+/* ===== LAYOUT ===== */
+body{
+    font-family:Arial;
+    margin:0;
+    background:#111;
+    color:white;
+}
+
+.container{
+    display:flex;
+}
+
+/* FORM */
+.form{
+    width:35%;
+    padding:20px;
+    background:#1a1a1a;
+    height:100vh;
+    overflow:auto;
+}
+
+input, textarea{
+    width:100%;
+    padding:10px;
+    margin:6px 0;
+    border:none;
+    border-radius:8px;
+}
+
+/* PREVIEW (PDF AREA) */
+.resume{
+    width:65%;
+    background:white;
+    color:black;
+    padding:40px;
+    position:relative;
+}
+
+.name{
+    font-size:28px;
+    font-weight:bold;
+    color:#0ea5e9;
+}
+
+.photo{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    position:absolute;
+    top:20px;
+    right:20px;
+    object-fit:cover;
+}
+
+.section{
+    margin-top:15px;
+}
+
+h3{
+    border-bottom:1px solid #000;
+}
+
+button{
+    padding:10px;
+    margin-top:10px;
+    background:cyan;
+    border:none;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- FORM -->
+<div class="form">
+
+<form method="POST" enctype="multipart/form-data">
+
+<h2>Resume Builder</h2>
+
+<input name="name" placeholder="Name">
+<input name="email" placeholder="Email">
+<input name="phone" placeholder="Phone">
+<input name="city" placeholder="City">
+
+<textarea name="summary" placeholder="Summary"></textarea>
+<textarea name="skills" placeholder="Skills"></textarea>
+<textarea name="education" placeholder="Education"></textarea>
+<textarea name="projects" placeholder="Projects"></textarea>
+<textarea name="experience" placeholder="Experience"></textarea>
+<textarea name="hobbies" placeholder="Hobbies"></textarea>
+
+<input type="file" name="photoInput">
+<input name="goal" placeholder="Your Goal (e.g. Python Developer Internship)">
+
+<button type="submit">Generate PDF</button>
+
+</form>
+
+<div class="section">
+<h3>🤖 AI Generated Content</h3>
+<pre style="white-space:pre-wrap;">{{ ai_text }}</pre>
+</div>
+
+</div>
+
+<!-- RESUME PREVIEW (PDF OUTPUT) -->
+<div class="resume">
+
+<img class="photo" src="{{ photo }}">
+
+<div class="name">{{ name }}</div>
+
+<p>{{ email }} | {{ phone }} | {{ city }}</p>
+
+<div class="section">
+<h3>Summary</h3>
+<p>{{ summary }}</p>
+</div>
+
+<div class="section">
+<h3>Skills</h3>
+<p>{{ skills }}</p>
+</div>
+
+<div class="section">
+<h3>Education</h3>
+<p>{{ education }}</p>
+</div>
+
+<div class="section">
+<h3>Projects</h3>
+<p>{{ projects }}</p>
+</div>
+
+<div class="section">
+<h3>Experience</h3>
+<p>{{ experience }}</p>
+</div>
+
+<div class="section">
+<h3>Hobbies</h3>
+<p>{{ hobbies }}</p>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

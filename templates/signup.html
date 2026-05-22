@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+<title>Signup</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f") no-repeat center center;
+    background-size: cover;
+    position:relative;
+}
+
+body::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(4px);
+}
+
+.container{
+    position:relative;
+    width:90%;
+    max-width:350px;
+    background:rgba(255,255,255,0.95);
+    padding:30px;
+    border-radius:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+/* INPUT FIX */
+.input-box{
+    position:relative;
+}
+
+.input-box input{
+    width:100%;
+    padding:12px 40px 12px 12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:8px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#667eea;
+}
+
+/* TOGGLE ICON */
+.toggle-icon{
+    position:absolute;
+    right:12px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    z-index:2;
+}
+
+/* BUTTON */
+button{
+    width:100%;
+    padding:12px;
+    background:#667eea;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#5a67d8;
+}
+
+.divider{
+    text-align:center;
+    margin:15px 0;
+    font-size:14px;
+}
+
+.login{
+    text-align:center;
+    font-size:14px;
+}
+
+.login a{
+    color:#667eea;
+    text-decoration:none;
+    font-weight:600;
+}
+
+@media(max-width:500px){
+    body{
+        background-size: contain;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Create Account</h2>
+
+    {% if success %}
+<p style="color:green; text-align:center;">
+    {{ success }}
+</p>
+{% endif %}
+
+{% if error %}
+<p style="color:red; text-align:center;">
+    {{ error }}
+</p>
+{% endif %}
+
+    <form id="signupForm" action="/signup" method="post">
+
+        <div class="input-box">
+            <input type="text" name="name" placeholder="Full Name" required>
+        </div>
+
+        <div class="input-box">
+            <input type="text" name="email" placeholder="Email" required>
+        </div>
+
+        <div class="input-box">
+            <input type="password" id="pass" name="password" placeholder="Password" required>
+        </div>
+
+        <div class="input-box">
+            <input type="password" id="cpass" placeholder="Confirm Password" required>
+        </div>
+
+        <button type="submit">Signup</button>
+    </form>
+
+    <div class="divider">or</div>
+
+    <div class="login">
+        Already have an account? <a href="/">Login</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const form = document.getElementById("signupForm");
+    const pass = document.getElementById("pass");
+    const cpass = document.getElementById("cpass");
+    const btn = form.querySelector("button");
+
+    // 🔥 VALIDATION
+    form.addEventListener("submit", function(e){
+        let name = document.querySelector("input[name='name']").value.trim();
+        let email = document.querySelector("input[name='email']").value.trim();
+
+        if(name === "" || email === "" || pass.value === "" || cpass.value === ""){
+            alert("All fields required ❌");
+            e.preventDefault();
+            return;
+        }
+
+        if(!email.includes("@")){
+            alert("Invalid email ❌");
+            e.preventDefault();
+            return;
+        }
+
+        if(pass.value.length < 6){
+            alert("Password must be 6+ chars ❌");
+            e.preventDefault();
+            return;
+        }
+
+        if(pass.value !== cpass.value){
+            alert("Passwords not match ❌");
+            e.preventDefault();
+            return;
+        }
+
+        btn.innerText = "Creating...";
+        btn.disabled = true;
+    });
+
+    // 🔥 TOGGLE FUNCTION
+    function addToggle(input){
+        const wrapper = input.parentElement;
+
+        const toggle = document.createElement("span");
+        toggle.innerText = "👁️";
+        toggle.classList.add("toggle-icon");
+
+        wrapper.appendChild(toggle);
+
+        toggle.addEventListener("click", ()=>{
+            if(input.type === "password"){
+                input.type = "text";
+                toggle.innerText = "🙈";
+            } else {
+                input.type = "password";
+                toggle.innerText = "👁️";
+            }
+        });
+    }
+
+    addToggle(pass);
+    addToggle(cpass);
+
+    // 🔥 LIVE MATCH
+    cpass.addEventListener("input", ()=>{
+        if(pass.value !== cpass.value){
+            cpass.style.borderColor = "red";
+        } else {
+            cpass.style.borderColor = "green";
+        }
+    });
+
+});
+
+
+</script>
+
+</body>
+</html>

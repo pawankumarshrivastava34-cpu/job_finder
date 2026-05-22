@@ -1,0 +1,9 @@
+flask
+flask-mail
+python-dotenv
+requests
+markdown
+PyPDF2
+openai
+reportlab
+gunicorn

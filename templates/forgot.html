@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forgot Password</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+</head>
+<body>
+    <style>
+        
+/* =========================
+   🌐 GLOBAL
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+/* =========================
+   🧾 CARD
+========================= */
+.card {
+    width: 380px;
+    padding: 30px;
+    text-align: center;
+
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+    color: white;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* TITLE */
+.card h2 {
+    color: #00c6ff;
+    margin-bottom: 10px;
+}
+
+/* TEXT */
+.card p {
+    color: #ccc;
+    font-size: 14px;
+}
+
+/* =========================
+   ✍️ INPUT
+========================= */
+.card input {
+    width: 100%;
+    padding: 12px;
+    margin: 15px 0;
+
+    border: none;
+    border-radius: 8px;
+    outline: none;
+
+    font-size: 14px;
+}
+
+/* =========================
+   🔘 BUTTON
+========================= */
+.card button {
+    width: 100%;
+    padding: 12px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #00c6ff;
+    color: black;
+
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.card button:hover {
+    background: #0072ff;
+    color: white;
+}
+
+/* =========================
+   🔗 LINK
+========================= */
+.card a {
+    display: block;
+    margin-top: 15px;
+
+    color: #00c6ff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.card a:hover {
+    color: white;
+}
+
+/* =========================
+   ✨ ANIMATION
+========================= */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* =========================
+   📱 TABLET
+========================= */
+@media (max-width: 768px) {
+    .card {
+        width: 320px;
+        padding: 25px;
+    }
+
+    .card h2 {
+        font-size: 20px;
+    }
+}
+
+/* =========================
+   📱 MOBILE
+========================= */
+@media (max-width: 480px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .card {
+        width: 100%;
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+    .card h2 {
+        font-size: 18px;
+    }
+
+    .card p {
+        font-size: 12px;
+    }
+
+    .card input {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .card button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .card a {
+        font-size: 13px;
+    }
+}
+    </style>
+
+<div class="card">
+    <h2>🔐 Forgot Password</h2>
+    <p>Enter your email to receive OTP</p>
+
+    <form method="POST">
+        <input type="email" name="email" placeholder="Enter Email" required>
+        <button type="submit">Send OTP</button>
+    </form>
+
+    <a href="/login">Back to Login</a>
+</div>
+
+</body>
+</html>

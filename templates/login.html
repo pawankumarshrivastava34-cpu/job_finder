@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+<title>Login</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f") no-repeat center/cover;
+    position:relative;
+}
+
+/* overlay */
+body::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.55);
+    backdrop-filter: blur(4px);
+}
+
+.container{
+    position:relative;
+    width:90%;
+    max-width:350px;
+    background:rgba(255,255,255,0.95);
+    padding:30px;
+    border-radius:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#667eea;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#5a67d8;
+}
+
+/* Forgot */
+.forgot{
+    text-align:right;
+    margin-top: -5px;  
+    margin-bottom: 15px;
+    /* margin-top:5px; */
+}
+
+.forgot a{
+    font-size:13px;
+    color:#667eea;
+    text-decoration:none;
+}
+
+/* Divider */
+.divider{
+    text-align:center;
+    margin:15px 0;
+    font-size:14px;
+    color:#555;
+}
+
+/* Signup */
+.signup{
+    text-align:center;
+    font-size:14px;
+}
+
+.signup a{
+    color:#667eea;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.signup a:hover{
+    text-decoration:underline;
+}
+
+/* Responsive */
+
+
+@media(max-width:500px){
+    .container{
+        padding:20px;
+    }
+}
+</style>
+
+</head>
+<body>
+   
+
+<div class="container">
+     {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <p style="color:red; text-align:center;">
+      {{ messages[0] }}
+    </p>
+  {% endif %}
+{% endwith %}
+    <h2>Login</h2>
+
+    <form action="/login" method="post">
+        <input type="text" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+
+        <div class="forgot">
+            <a href="/forgot">Forgot password?</a>
+        </div>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <div class="divider">or</div>
+
+    <div class="signup">
+        Don’t have an account? <a href="/signup">Sign up</a>
+    </div>
+</div>
+
+<script>
+// Form validation + loading effect
+document.querySelector("form").addEventListener("submit", function(e){
+    let email = document.querySelector("input[name='email']").value.trim();
+    let password = document.querySelector("input[name='password']").value.trim();
+
+    if(email === "" || password === ""){
+        alert("All fields are required ❌");
+        e.preventDefault();
+        return;
+    }
+
+    // simple email check
+    if(!email.includes("@")){
+        alert("Enter valid email ❌");
+        e.preventDefault();
+        return;
+    }
+
+    // loading effect
+    let btn = document.querySelector("button");
+    btn.innerText = "Logging in...";
+    btn.disabled = true;
+});
+
+// Show/Hide password
+const passInput = document.querySelector("input[name='password']");
+
+const toggle = document.createElement("span");
+toggle.innerText = "👁️";
+toggle.style.cursor = "pointer";
+toggle.style.position = "absolute";
+toggle.style.right = "15px";
+toggle.style.top = "50%";
+toggle.style.transform = "translateY(-50%)";
+
+// wrap password input
+passInput.parentElement.style.position = "relative";
+passInput.parentElement.appendChild(toggle);
+
+toggle.addEventListener("click", ()=>{
+    if(passInput.type === "password"){
+        passInput.type = "text";
+        toggle.innerText = "🙈";
+    } else {
+        passInput.type = "password";
+        toggle.innerText = "👁️";
+    }
+});
+</script>
+
+</body>
+</html>

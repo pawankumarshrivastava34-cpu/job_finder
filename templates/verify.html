@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify OTP</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+</head>
+<body>
+    <style>
+        
+/* =========================
+   RESET
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial;
+}
+
+/* =========================
+   BODY
+========================= */
+body {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+
+    padding: 15px;
+}
+
+/* =========================
+   CARD (VERIFY BOX)
+========================= */
+.card {
+    width: 100%;
+    max-width: 380px;
+
+    padding: 25px;
+    text-align: center;
+
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+    color: white;
+
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* TITLE */
+.card h2 {
+    color: #00c6ff;
+    margin-bottom: 10px;
+}
+
+/* TEXT */
+.card p {
+    color: #ccc;
+    font-size: 14px;
+}
+
+/* =========================
+   OTP INPUT
+========================= */
+.card input {
+    width: 100%;
+    padding: 12px;
+    margin: 15px 0;
+
+    border: none;
+    border-radius: 8px;
+    outline: none;
+
+    font-size: 16px;
+    text-align: center;
+    letter-spacing: 5px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.card button {
+    width: 100%;
+    padding: 12px;
+
+    background: #00c6ff;
+    border: none;
+    border-radius: 8px;
+
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.card button:hover {
+    background: #0072ff;
+    color: white;
+}
+
+/* =========================
+   TIMER
+========================= */
+.timer {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #ffcc00;
+}
+
+/* =========================
+   ANIMATION
+========================= */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* =========================
+   📱 MOBILE RESPONSIVE
+========================= */
+@media (max-width: 480px) {
+
+    body {
+        align-items: flex-start;
+    }
+
+    .card {
+        margin-top: 50px;
+        max-width: 100%;
+        border-radius: 10px;
+    }
+
+    .card input {
+        font-size: 18px;
+        letter-spacing: 4px;
+    }
+}
+    </style>
+
+<div class="card">
+    <h2>🔑 OTP Verification</h2>
+    <p>OTP sent to your email</p>
+
+    <form method="POST" action="/verify">
+        <input type="hidden" name="email" value="{{ email }}">
+
+        <input type="text" id="otp" name="otp" placeholder="Enter OTP" required>
+
+        <button type="submit">Verify OTP</button>
+    </form>
+
+    <p class="timer" id="timer">60 sec remaining</p>
+    <form method="POST" action="/resend">
+    <input type="hidden" name="email" value="{{ email }}">
+    <button type="submit" style="margin-top:10px;background:#ff9800;">
+        🔄 Resend OTP
+    </button>
+</form>
+</div>
+
+<script>
+let time = 60;
+let timer = document.getElementById("timer");
+let input = document.getElementById("otp");
+
+let x = setInterval(() => {
+    time--;
+    timer.innerHTML = "⏳ " + time + " sec remaining";
+
+    if(time <= 0){
+        clearInterval(x);
+        timer.innerHTML = "❌ OTP Expired";
+        input.disabled = true;
+    }
+}, 1000);
+</script>
+
+</body>
+</html>
