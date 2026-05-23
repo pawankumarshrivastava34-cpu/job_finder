@@ -20,6 +20,7 @@ from openai import OpenAI
 import os
 import requests
 from dotenv import load_dotenv
+import certifi
 
 # ================= LOAD ENV =================
 load_dotenv()
@@ -39,11 +40,17 @@ client = OpenAI(
 JOB_API_KEY = os.getenv("JOB_API_KEY")
 
 # ================= DATABASE =================
-mongo_client = MongoClient(os.getenv("MONGO_URI"))
+
+
+
+mongo_client = MongoClient(
+    os.getenv("MONGO_URI"),
+    tls=True,
+    tlsCAFile=certifi.where()
+)
 
 db = mongo_client["jobfinder"]
 users = db["users"]
-
 
 # ================= CREATE TABLE =================
 
