@@ -9,3 +9,4 @@ reportlab
 gunicorn
 pymongo[srv]
 dnspython
+certifi
