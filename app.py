@@ -268,47 +268,43 @@ def forgot():
 @app.route('/verify', methods=['GET', 'POST'])
 def verify():
 
+    if request.method != 'POST':
+        return render_template("verify.html")
+
     email = request.form.get('email')
     otp = request.form.get('otp')
 
     if not email or not otp:
-
         return "Missing email or OTP"
 
     data = otp_store.get(email)
 
     if not data:
-
         return "OTP not found"
 
     if str(data['otp']) != otp:
-
         return "Wrong OTP"
 
-    # ================= SIGNUP VERIFY =================
-
+    # ================= SIGNUP =================
     if data['type'] == "signup":
 
-       users.insert_one({
-    "name": data['name'],
-    "email": email,
-    "password": data['password'],
-    "bio": "",
-    "image": ""
-})
+        users.insert_one({
+            "name": data['name'],
+            "email": email,
+            "password": data['password'],
+            "bio": "",
+            "image": ""
+        })
 
         return redirect('/login')
 
-    # ================= FORGOT VERIFY =================
-
+    # ================= FORGOT =================
     if data['type'] == "forgot":
 
         if time.time() - data["time"] > 60:
-
             return "OTP expired"
 
         session['reset_email'] = email
-
         return render_template("reset.html")
 
 # ================= RESEND OTP =================
