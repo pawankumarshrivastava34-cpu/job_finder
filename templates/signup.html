@@ -131,7 +131,7 @@ button:hover{
 {% if error %}
 <p style="color:red; text-align:center;">
     {{ error }}
-</p>
+
 {% endif %}
 
     {% if msg %}
@@ -139,6 +139,7 @@ button:hover{
     {{ msg }}
 </div>
 {% endif %}
+    </p>
 
     <form id="signupForm" action="/signup" method="post">
 
