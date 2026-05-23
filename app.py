@@ -235,8 +235,7 @@ def login():
             return redirect('/')
 
         else:
-
-            return "Wrong email or password"
+            return render_template("login.html", msg="Wrong email or password ❌")
 
     return render_template("login.html")
 
