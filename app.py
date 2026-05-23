@@ -192,8 +192,13 @@ def signup():
         password = request.form.get('password')
 
         if not name or not email or not password:
+            return render_template("signup.html", msg="All fields required ❌")
 
-            return "All fields required"
+        # ✅ CHECK EMAIL EXISTS
+        existing_user = users.find_one({"email": email})
+
+        if existing_user:
+            return render_template("signup.html", msg="Email already registered ❌")
 
         otp = generate_otp()
 
@@ -206,14 +211,9 @@ def signup():
 
         send_otp(email, otp)
 
-        return render_template(
-            "verify.html",
-            email=email
-        )
+        return render_template("verify.html", email=email)
 
-    return render_template("signup.html")
-
-# ================= LOGIN =================
+    return render_template("signup.html")# ================= LOGIN =================
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
