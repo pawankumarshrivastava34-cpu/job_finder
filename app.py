@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request, redirect, session, send_file
 import random
 import time
-import sqlite3
+
+from pymongo import MongoClient
+
+
 from flask_mail import Mail, Message
 import markdown
 
@@ -36,43 +39,15 @@ client = OpenAI(
 JOB_API_KEY = os.getenv("JOB_API_KEY")
 
 # ================= DATABASE =================
+client = MongoClient(os.getenv("MONGO_URI"))
 
-def get_db():
+db = client["jobfinder"]
+users = db["users"]
 
-    conn = sqlite3.connect("database.db")
-
-    conn.row_factory = sqlite3.Row
-
-    return conn
 
 # ================= CREATE TABLE =================
 
-conn = get_db()
 
-cursor = conn.cursor()
-
-cursor.execute("""
-
-CREATE TABLE IF NOT EXISTS Users (
-
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-    name TEXT,
-
-    email TEXT UNIQUE,
-
-    password TEXT,
-
-    bio TEXT,
-
-    image TEXT
-
-)
-
-""")
-
-conn.commit()
-conn.close()
 
 # ================= MAIL =================
 
@@ -241,17 +216,10 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
 
-        conn = get_db()
-        cursor = conn.cursor()
-
-        cursor.execute(
-            "SELECT id FROM Users WHERE email=? AND password=?",
-            (email, password)
-        )
-
-        user = cursor.fetchone()
-
-        conn.close()
+        user = users.find_one({
+    "email": email,
+    "password": password
+})
 
         if user:
 
@@ -321,16 +289,13 @@ def verify():
 
     if data['type'] == "signup":
 
-        conn = get_db()
-        cursor = conn.cursor()
-
-        cursor.execute(
-            "INSERT INTO Users (name, email, password) VALUES (?, ?, ?)",
-            (data['name'], email, data['password'])
-        )
-
-        conn.commit()
-        conn.close()
+       users.insert_one({
+    "name": data['name'],
+    "email": email,
+    "password": data['password'],
+    "bio": "",
+    "image": ""
+})
 
         return redirect('/login')
 
@@ -622,13 +587,7 @@ def profile():
 
     email = session['user']
 
-    conn = get_db()
-    cursor = conn.cursor()
-
-    cursor.execute(
-        "SELECT name, email, bio, image FROM Users WHERE email=?",
-        (email,)
-    )
+    row = users.find_one({"email": email})
 
     row = cursor.fetchone()
 
@@ -644,13 +603,14 @@ def profile():
             image_name = file.filename
             file.save("static/uploads/" + image_name)
 
-        cursor.execute("""
-            UPDATE Users
-            SET email=?, bio=?, image=?
-            WHERE email=?
-        """, (new_email, bio, image_name, email))
-
-        conn.commit()
+        users.update_one(
+    {"email": email},
+    {"$set": {
+        "email": new_email,
+        "bio": bio,
+        "image": image_name
+    }}
+)
 
         session['user'] = new_email
 
