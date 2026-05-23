@@ -39,9 +39,9 @@ client = OpenAI(
 JOB_API_KEY = os.getenv("JOB_API_KEY")
 
 # ================= DATABASE =================
-client = MongoClient(os.getenv("MONGO_URI"))
+mongo_client = MongoClient(os.getenv("MONGO_URI"))
 
-db = client["jobfinder"]
+db = mongo_client["jobfinder"]
 users = db["users"]
 
 
@@ -591,36 +591,33 @@ def profile():
         new_email = request.form.get('email')
         file = request.files.get('image')
 
-        image_name = row[3] if row[3] else "default.png"
+        image_name = row.get("image", "default.png") if row else "default.png"
 
         if file and file.filename != "":
             image_name = file.filename
             file.save("static/uploads/" + image_name)
 
         users.update_one(
-    {"email": email},
-    {"$set": {
-        "email": new_email,
-        "bio": bio,
-        "image": image_name
-    }}
-)
+            {"email": email},
+            {"$set": {
+                "email": new_email,
+                "bio": bio,
+                "image": image_name
+            }}
+        )
 
         session['user'] = new_email
 
         return redirect('/profile')
 
-    # conn.close()
-
-   user = {
-    "username": row.get("name"),
-    "email": row.get("email"),
-    "bio": row.get("bio", ""),
-    "image": row.get("image", "default.png")
-}
+    user = {
+        "username": row.get("name") if row else "",
+        "email": row.get("email") if row else "",
+        "bio": row.get("bio", "") if row else "",
+        "image": row.get("image", "default.png") if row else "default.png"
+    }
 
     return render_template("profile.html", user=user)
-
 # ------------Resume Analyzer-----------
 
 @app.route('/resume-analyzer', methods=['GET', 'POST'])
@@ -661,6 +658,7 @@ def resume_analyzer():
                 }
 
             ]
+            
         )
 
         result = response.choices[0].message.content
