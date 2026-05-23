@@ -585,8 +585,6 @@ def profile():
 
     row = users.find_one({"email": email})
 
-    row = cursor.fetchone()
-
     if request.method == 'POST':
 
         bio = request.form.get('bio')
@@ -612,14 +610,14 @@ def profile():
 
         return redirect('/profile')
 
-    conn.close()
+    # conn.close()
 
-    user = {
-        "username": row[0],
-        "email": row[1],
-        "bio": row[2] if row[2] else "",
-        "image": row[3] if row[3] else "default.png"
-    }
+   user = {
+    "username": row.get("name"),
+    "email": row.get("email"),
+    "bio": row.get("bio", ""),
+    "image": row.get("image", "default.png")
+}
 
     return render_template("profile.html", user=user)
 
@@ -671,17 +669,7 @@ def resume_analyzer():
 
 # ================= RUN =================
 
-conn = get_db()
 
-cursor = conn.cursor()
-
-cursor.execute("SELECT * FROM Users")
-
-rows = cursor.fetchall()
-
-for row in rows:
-
-    print(dict(row))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
