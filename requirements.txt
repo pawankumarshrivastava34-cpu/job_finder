@@ -7,5 +7,5 @@ PyPDF2
 openai
 reportlab
 gunicorn
-pymongo
+pymongo[srv]
 dnspython
