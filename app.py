@@ -357,16 +357,12 @@ def reset():
 
         return "Error"
 
-    conn = get_db()
-    cursor = conn.cursor()
-
-    cursor.execute(
-        "UPDATE Users SET password=? WHERE email=?",
-        (password, email)
-    )
-
-    conn.commit()
-    conn.close()
+    users.update_one(
+    {"email": email},
+    {"$set": {
+        "password": password
+    }}
+)
 
     return redirect('/login')
 
