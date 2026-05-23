@@ -134,6 +134,12 @@ button:hover{
 </p>
 {% endif %}
 
+    {% if msg %}
+<div class="alert alert-danger text-center">
+    {{ msg }}
+</div>
+{% endif %}
+
     <form id="signupForm" action="/signup" method="post">
 
         <div class="input-box">
