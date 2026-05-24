@@ -7,123 +7,79 @@
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 
 <title>Login</title>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
+
 
 <style>
-   *{
+  *{
     margin:0;
     padding:0;
     box-sizing:border-box;
     font-family: 'Segoe UI', sans-serif;
 }
 
-html, body{
-    width:100%;
-    height:100%;
-}
-
-/* MAIN BACKGROUND */
 body{
+    height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    min-height:100vh;
-    background: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f") no-repeat center center;
-    background-size:cover;
+    background: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f") no-repeat center/cover;
     position:relative;
 }
 
-/* DARK OVERLAY */
+/* overlay */
 body::before{
     content:"";
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.65);
-    backdrop-filter: blur(6px);
-    z-index:0;
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.55);
+    backdrop-filter: blur(4px);
 }
 
-/* LOGIN CARD */
 .container{
     position:relative;
-    z-index:1;
-
-    width:100%;
-    max-width:380px;
-
-    margin:0 auto;
-
+    width:90%;
+    max-width:350px;
     background:rgba(255,255,255,0.95);
-    padding:28px;
-    border-radius:18px;
-
-    box-shadow:0 20px 50px rgba(0,0,0,0.5);
-
-    display:flex;
-    flex-direction:column;
-
-    animation: pop 0.35s ease-in-out;
-}
-
-/* ANIMATION */
-@keyframes pop{
-    from{
-        transform:scale(0.9);
-        opacity:0;
-    }
-    to{
-        transform:scale(1);
-        opacity:1;
-    }
+    padding:30px;
+    border-radius:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
 }
 
 h2{
     text-align:center;
-    margin-bottom:18px;
-    color:#222;
+    margin-bottom:20px;
 }
 
-/* INPUTS */
 input{
     width:100%;
     padding:12px;
-    margin:8px 0;
-    border:1px solid #ddd;
-    border-radius:10px;
-    outline:none;
-    transition:0.3s;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:8px;
 }
 
-input:focus{
-    border-color:#667eea;
-    box-shadow:0 0 0 3px rgba(102,126,234,0.2);
-}
-
-/* BUTTON */
 button{
     width:100%;
     padding:12px;
-    margin-top:10px;
-
     background:#667eea;
     color:white;
     border:none;
-    border-radius:10px;
-
+    border-radius:8px;
     cursor:pointer;
-    font-weight:600;
     transition:0.3s;
 }
 
 button:hover{
     background:#5a67d8;
-    transform:translateY(-2px);
 }
 
-/* FORGOT */
+/* Forgot */
 .forgot{
     text-align:right;
-    margin-top:6px;
+    margin-top: -5px;  
+    margin-bottom: 15px;
+    /* margin-top:5px; */
 }
 
 .forgot a{
@@ -132,15 +88,15 @@ button:hover{
     text-decoration:none;
 }
 
-/* DIVIDER */
+/* Divider */
 .divider{
     text-align:center;
     margin:15px 0;
-    font-size:13px;
-    color:#666;
+    font-size:14px;
+    color:#555;
 }
 
-/* SIGNUP */
+/* Signup */
 .signup{
     text-align:center;
     font-size:14px;
@@ -148,38 +104,22 @@ button:hover{
 
 .signup a{
     color:#667eea;
-    font-weight:600;
     text-decoration:none;
+    font-weight:600;
 }
 
-/* PASSWORD TOGGLE FIX */
-.password-wrapper{
-    position:relative;
+.signup a:hover{
+    text-decoration:underline;
 }
 
-.password-wrapper span{
-    position:absolute;
-    right:12px;
-    top:50%;
-    transform:translateY(-50%);
-    cursor:pointer;
-    font-size:18px;
-}
+/* Responsive */
 
-/* MOBILE FIX (IMPORTANT) */
+
 @media(max-width:500px){
-
-    body{
-        padding:15px;
-    }
-
     .container{
-        width:100%;
-        max-width:100%;
-        border-radius:14px;
+        padding:20px;
     }
-}
-</style>
+}</style>
 
 </head>
 <body>
