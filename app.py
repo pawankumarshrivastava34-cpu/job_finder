@@ -295,8 +295,6 @@ def verify():
             error="❌ Wrong OTP"
         )
 
-    return "OTP Verified"
-
     # ================= SIGNUP =================
     if data['type'] == "signup":
 
