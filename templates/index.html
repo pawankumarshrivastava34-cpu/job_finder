@@ -9,6 +9,1167 @@
 <body>
     <style>
 
+        <!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Finder</title>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+</head>
+<body>
+    <style>
+/* =========================
+   GOOGLE FONT
+========================= */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap');
+
+/* =========================
+   RESET
+========================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:
+    linear-gradient(135deg,#000000,#140000,#220000);
+
+    color:white;
+}
+
+.search-box button,
+.card a,
+.ai-card a,
+.next-btn button{
+
+    background:
+    linear-gradient(135deg,#ff0000,#ff4d4d);
+
+    color:white;
+}
+
+.card h3,
+.ai-card h2,
+.logo span{
+
+    color:#ff4d4d;
+}
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:linear-gradient(#00ffc8,#3b82f6);
+    border-radius:20px;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+
+    width:100%;
+
+    padding:18px 28px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    background:rgba(255,255,255,0.05);
+
+    backdrop-filter:blur(14px);
+
+    border-bottom:
+    1px solid rgba(255,255,255,0.08);
+}
+
+/* LOGO */
+
+.logo{
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo img{
+
+    width:52px;
+    height:52px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:2px solid #00ffc8;
+
+    box-shadow:
+    0 0 20px rgba(0,255,200,0.4);
+
+    animation:pulse 2.5s infinite;
+}
+
+.logo span{
+
+    font-size:28px;
+    font-weight:700;
+
+    background:
+    linear-gradient(
+        to right,
+        #00ffc8,
+        #38bdf8
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+@keyframes pulse{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.08);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+/* =========================
+   HERO NAME
+========================= */
+
+.hero{
+
+    position:absolute;
+
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.hero-text{
+
+    font-size:38px;
+    font-weight:900;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    background:
+    linear-gradient(
+        90deg,
+        #ffffff,
+        #00ffc8,
+        #3b82f6,
+        #ffffff
+    );
+
+    background-size:300%;
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    animation:
+    shine 5s linear infinite,
+    float 3s ease-in-out infinite;
+
+    text-shadow:
+    0 0 20px rgba(0,255,200,0.3);
+}
+
+@keyframes shine{
+
+    0%{
+        background-position:0%;
+    }
+
+    100%{
+        background-position:300%;
+    }
+}
+
+@keyframes float{
+
+    0%,100%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-6px);
+    }
+}
+
+/* =========================
+   MENU
+========================= */
+
+.menu{
+    position:relative;
+}
+
+.menu button{
+
+    width:48px;
+    height:48px;
+
+    border:none;
+    border-radius:14px;
+
+    background:
+    rgba(255,255,255,0.06);
+
+    color:white;
+
+    font-size:26px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.menu button:hover{
+
+    transform:rotate(90deg);
+
+    background:#00ffc8;
+
+    color:black;
+}
+
+/* DROPDOWN */
+
+.dropdown{
+
+    display:none;
+
+    position:absolute;
+
+    top:60px;
+    right:0;
+
+    width:240px;
+
+    overflow:hidden;
+
+    border-radius:18px;
+
+    background:
+    rgba(15,23,42,0.95);
+
+    backdrop-filter:blur(15px);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,0.45);
+}
+
+.dropdown a{
+
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    padding:16px 18px;
+
+    text-decoration:none;
+
+    color:#e2e8f0;
+
+    font-size:15px;
+
+    transition:0.3s;
+}
+
+.dropdown a:hover{
+
+    background:
+    rgba(0,255,200,0.12);
+
+    color:#00ffc8;
+
+    padding-left:24px;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+
+    width:95%;
+    max-width:1300px;
+
+    margin:auto;
+
+    padding:50px 0;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+h1{
+
+    text-align:center;
+
+    font-size:68px;
+
+    font-weight:800;
+
+    line-height:1.2;
+
+    margin-bottom:45px;
+
+    background:
+    linear-gradient(
+        to right,
+        #ffffff,
+        #00ffc8,
+        #3b82f6
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* =========================
+   SEARCH BOX
+========================= */
+
+.search-box{
+
+    width:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    gap:18px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:50px;
+}
+
+.search-box input{
+
+    flex:1;
+    min-width:260px;
+
+    padding:18px 22px;
+
+    border:none;
+    outline:none;
+
+    border-radius:18px;
+
+    background:
+    rgba(255,255,255,0.06);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    color:white;
+
+    font-size:16px;
+
+    transition:0.35s;
+}
+
+.search-box input:focus{
+
+    border-color:#00ffc8;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 0 0 5px rgba(0,255,200,0.08),
+    0 0 25px rgba(0,255,200,0.15);
+}
+
+.search-box button{
+
+    padding:18px 28px;
+
+    border:none;
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00ffc8,
+        #38bdf8
+    );
+
+    color:black;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:0.35s;
+
+    box-shadow:
+    0 10px 30px rgba(0,255,200,0.2);
+}
+
+.search-box button:hover{
+
+    transform:
+    translateY(-4px)
+    scale(1.04);
+
+    box-shadow:
+    0 15px 40px rgba(0,255,200,0.35);
+}
+
+/* =========================
+   AI CARDS
+========================= */
+
+.ai-section{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(280px,1fr));
+
+    gap:28px;
+
+    margin-bottom:60px;
+}
+
+.ai-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:30px;
+
+    border-radius:26px;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(15px);
+
+    transition:0.4s;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,0.35);
+}
+
+.ai-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    linear-gradient(
+        135deg,
+        transparent,
+        rgba(255,255,255,0.08),
+        transparent
+    );
+
+    transform:translateX(-100%);
+
+    transition:0.8s;
+}
+
+.ai-card:hover::before{
+    transform:translateX(100%);
+}
+
+.ai-card:hover{
+
+    transform:
+    translateY(-10px)
+    scale(1.02);
+}
+
+.ai-card h2{
+
+    margin-bottom:14px;
+
+    font-size:28px;
+
+    color:#00ffc8;
+}
+
+.ai-card p{
+
+    color:#cbd5e1;
+
+    line-height:1.8;
+
+    margin-bottom:20px;
+}
+
+.ai-card a{
+
+    display:inline-block;
+
+    padding:13px 24px;
+
+    border-radius:14px;
+
+    text-decoration:none;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00ffc8,
+        #3b82f6
+    );
+
+    color:black;
+
+    font-weight:700;
+
+    transition:0.3s;
+}
+
+.ai-card a:hover{
+
+    transform:scale(1.08);
+}
+
+/* =========================
+   JOB CARDS
+========================= */
+
+.results{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(320px,1fr));
+
+    gap:28px;
+}
+
+.card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:30px;
+
+    border-radius:28px;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(18px);
+
+    transition:0.4s;
+
+    box-shadow:
+    0 20px 40px rgba(0,0,0,0.35);
+}
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-100px;
+    right:-100px;
+
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
+    background:
+    rgba(0,255,200,0.12);
+
+    filter:blur(40px);
+}
+
+.card:hover{
+
+    transform:
+    translateY(-12px)
+    rotateX(2deg);
+
+    border-color:
+    rgba(0,255,200,0.3);
+}
+
+.card h3{
+
+    font-size:26px;
+
+    margin-bottom:16px;
+
+    color:#00ffc8;
+}
+
+.card p{
+
+    color:#cbd5e1;
+
+    margin-bottom:12px;
+
+    line-height:1.6;
+}
+
+.card a{
+
+    display:inline-block;
+
+    margin-top:16px;
+
+    padding:13px 22px;
+
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00ffc8,
+        #3b82f6
+    );
+
+    text-decoration:none;
+
+    color:black;
+
+    font-weight:700;
+
+    transition:0.35s;
+}
+
+.card a:hover{
+
+    transform:scale(1.08);
+}
+
+/* =========================
+   NEXT BUTTON
+========================= */
+
+.next-btn{
+
+    text-align:center;
+
+    margin-top:50px;
+}
+
+.next-btn button{
+
+    padding:16px 30px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00ffc8,
+        #3b82f6
+    );
+
+    color:black;
+
+    font-size:16px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.next-btn button:hover{
+
+    transform:
+    translateY(-4px)
+    scale(1.05);
+}
+
+/* =========================
+   RECENT BOX
+========================= */
+
+#recentBox{
+
+    margin-bottom:30px;
+
+    color:#94a3b8;
+
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+#recentBox div{
+
+    padding:10px 16px;
+
+    border-radius:14px;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+
+    margin-top:80px;
+
+    padding-top:60px;
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border-top:
+    1px solid rgba(255,255,255,0.08);
+}
+
+.footer-container{
+
+    width:92%;
+    max-width:1200px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(250px,1fr));
+
+    gap:35px;
+}
+
+.footer-box h2,
+.footer-box h3{
+
+    margin-bottom:18px;
+
+    color:#00ffc8;
+}
+
+.footer-box p{
+
+    color:#cbd5e1;
+
+    line-height:1.8;
+
+    margin-bottom:10px;
+}
+
+.footer-box a{
+
+    display:block;
+
+    margin-bottom:12px;
+
+    color:#cbd5e1;
+
+    text-decoration:none;
+
+    transition:0.3s;
+}
+
+.footer-box a:hover{
+
+    color:#00ffc8;
+
+    transform:translateX(5px);
+}
+
+.footer-bottom{
+
+    text-align:center;
+
+    padding:25px;
+
+    margin-top:40px;
+
+    border-top:
+    1px solid rgba(255,255,255,0.08);
+
+    color:#94a3b8;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:992px){
+
+    .hero{
+        display:none;
+    }
+
+    h1{
+        font-size:52px;
+    }
+}
+
+@media(max-width:768px){
+
+    .navbar{
+        padding:14px 16px;
+    }
+
+    .logo span{
+        font-size:22px;
+    }
+
+    h1{
+        font-size:38px;
+    }
+
+    .search-box{
+        flex-direction:column;
+    }
+
+    .search-box input,
+    .search-box button{
+        width:100%;
+    }
+
+    .results{
+        grid-template-columns:1fr;
+    }
+
+    .dropdown{
+        right:-10px;
+    }
+}
+
+@media(max-width:480px){
+
+    .container{
+        width:92%;
+    }
+
+    h1{
+        font-size:30px;
+    }
+
+    .logo img{
+        width:42px;
+        height:42px;
+    }
+
+    .card,
+    .ai-card{
+
+        padding:22px;
+        border-radius:22px;
+    }
+
+    .card h3{
+        font-size:22px;
+    }
+
+    .ai-card h2{
+        font-size:24px;
+    }
+
+    .search-box input{
+
+        min-width:100%;
+        padding:15px;
+    }
+
+    .search-box button{
+        padding:15px;
+    }
+}
+
+    </style>
+     
+
+<!-- 🔥 NAVBAR -->
+<div class="navbar">
+    <!-- <h2>💼 JobFinder</h2> -->
+     <div class="logo">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="logo">
+    <span>JobFinder</span>
+</div>
+<div class="hero">
+
+    <!-- <img src="{{ url_for('static', filename='logos.jpeg') }}" alt="hero"> -->
+
+    <div class="hero-name">
+        <span class="hero-text">
+            Nawal Pawan Shrivastav
+        </span>
+    </div>
+
+</div>
+    <div class="menu">
+        <button onclick="toggleMenu()">⋮</button>
+        <div id="dropdown" class="dropdown">
+
+    <a href="/profile">👤 Profile</a>
+
+    <a href="/chatbot">🤖 AI Chatbot</a>
+
+    <a href="/resume-analyzer">📄 Resume Analyzer</a>
+
+    <a href="/resume">✍️ Resume Generate</a>
+
+    <a href="/logout">🚪 Logout</a>
+
+</div>
+    </div>
+</div>
+
+<div class="container">
+
+<h1>💼 Find Your Dream Job</h1>
+<!-- 🔥 AI FEATURES -->
+
+<div class="ai-section">
+
+    <div class="ai-card">
+        <h2>🤖 AI Chatbot</h2>
+        <p>Ask career questions using AI</p>
+        <a href="/chatbot">Open</a>
+    </div>
+
+    <div class="ai-card">
+        <h2>📄 Resume Analyzer</h2>
+        <p>Analyze your resume with AI</p>
+        <a href="/resume-analyzer">Analyze</a>
+    </div>
+
+    <div class="ai-card">
+        <h2>✍️ Resume</h2>
+        <p>Generate professional resume</p>
+        <a href="/resume">Generate</a>
+    </div>
+
+</div>
+
+<!-- 🔍 SEARCH -->
+<form action="/jobs" method="GET" class="search-box" onsubmit="saveSearch()">
+    <input type="text" name="job" placeholder="Job title" value="{{ job }}" required>
+    <input type="text" name="location" placeholder="Location" value="{{ location }}" required>
+
+    <input type="hidden" name="page" value="1">
+    <button type="submit">Search</button>
+</form>
+
+<!-- 🕒 RECENT SEARCH -->
+<div id="recentBox" style="margin:10px; color:#aaa;"></div>
+
+<!-- 🔥 TRENDING -->
+{% if not is_search %}
+<div class="results">
+
+    {% if trending_jobs %}
+        {% for job in trending_jobs %}
+        <div class="card">
+            <h3>{{ job.title }}</h3>
+            <p>{{ job.company }}</p>
+            <p>{{ job.location }}</p>
+            <p>💰 {{ job.salary }}</p>
+            <p>📌 {{ job.type }}</p>
+            <a href="{{ job.link }}" target="_blank">Apply</a>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+</div>
+{% endif %}
+
+<!-- 📊 SEARCH RESULTS -->
+<div class="results">
+
+{% if jobs and jobs|length > 0 %}
+
+    {% for job in jobs %}
+    <div class="card">
+
+        <h3>{{ job.job_title }}</h3>
+        <p>🏢 {{ job.employer_name }}</p>
+        <p>📍 {{ job.job_city }}</p>
+
+        {% if job.job_employment_type %}
+        <p>📌 {{ job.job_employment_type }}</p>
+        {% endif %}
+
+        {% if job.job_apply_link %}
+        <a href="{{ job.job_apply_link }}" target="_blank">Apply Now</a>
+        {% endif %}
+
+    </div>
+    {% endfor %}
+
+{% elif is_search %}
+
+    <div style="color:#ffcc00; margin-top:20px;">
+        😕 No results found
+    </div>
+
+{% endif %}
+
+</div>
+
+<!-- 🔄 NEXT PAGE -->
+{% if jobs %}
+<div class="next-btn">
+
+<form action="/jobs" method="GET">
+
+    <input type="hidden" name="job" value="{{ job }}">
+    <input type="hidden" name="location" value="{{ location }}">
+
+    <input type="hidden" name="page" value="{{ page|default(1)|int + 1 }}">
+
+    <button type="submit">Next Page →</button>
+
+</form>
+
+</div>
+{% endif %}
+
+</div>
+
+<!-- ⚡ JS -->
+<script>
+
+let text = "💼 Find Your Dream Job";
+let i = 0;
+
+function typeEffect(){
+    if(i < text.length){
+        document.querySelector("h1").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeEffect, 50);
+    }
+}
+
+document.querySelector("h1").innerHTML = "";
+typeEffect();
+
+function toggleMenu() {
+    let menu = document.getElementById("dropdown");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+// recent search
+let recent = JSON.parse(localStorage.getItem("recent") || "[]");
+
+function saveSearch() {
+    let job = document.querySelector('input[name="job"]').value;
+    let location = document.querySelector('input[name="location"]').value;
+
+    if(job && location){
+        recent.unshift(job + " - " + location);
+        recent = recent.slice(0, 5);
+        localStorage.setItem("recent", JSON.stringify(recent));
+    }
+}
+
+window.onload = function() {
+    let box = document.getElementById("recentBox");
+
+    recent.forEach(item => {
+        let div = document.createElement("div");
+        div.innerHTML = "🕒 " + item;
+        box.appendChild(div);
+    });
+}
+
+</script>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-box">
+            <h2>💼 JobFinder</h2>
+            <p>
+                AI powered job searching platform using Flask +  AI.
+            </p>
+        </div>
+
+        <div class="footer-box">
+            <h3>Quick Links</h3>
+
+            <a href="/">Home</a>
+            <a href="/chatbot">AI Chatbot</a>
+            <a href="/resume-analyzer">Resume Analyzer</a>
+            <a href="/resume">
+
+    ✍️ Resume Generate
+
+</a>
+        </div>
+
+        <div class="footer-box">
+            <h3>Developer</h3>
+
+            <p>👨‍💻 Nawal Pawan Shrivastav</p>
+            <p>🚀 Flask Developer</p>
+            <p>🤖 AI Enthusiast</p>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 JobFinder | Designed By Nawal Pawan Shrivastav
+    </div>
+
+</footer>
+
+</body>
+</html>
 
     </style>
      
