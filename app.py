@@ -289,7 +289,13 @@ def verify():
         return "OTP not found"
 
     if str(data['otp']) != otp:
-        return "Wrong OTP"
+        return render_template(
+            "verify.html",
+            email=email,
+            error="❌ Wrong OTP"
+        )
+
+    return "OTP Verified"
 
     # ================= SIGNUP =================
     if data['type'] == "signup":
