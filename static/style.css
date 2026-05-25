@@ -798,3 +798,424 @@ h1{
         font-size:13px;
     }
 }
+
+/* ========== advanced ============= */
+/* =========================
+   SMOOTH SCROLL
+========================= */
+
+html{
+    scroll-behavior:smooth;
+}
+
+/* =========================
+   CUSTOM SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:#020617;
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:
+        linear-gradient(
+            #00ffc8,
+            #38bdf8
+        );
+
+    border-radius:20px;
+}
+
+/* =========================
+   BODY GLOW EFFECT
+========================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    width:500px;
+    height:500px;
+
+    background:#00ffc8;
+
+    top:-200px;
+    left:-200px;
+
+    border-radius:50%;
+
+    filter:blur(180px);
+
+    opacity:0.12;
+
+    animation:moveGlow 8s linear infinite;
+
+    z-index:-1;
+}
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:450px;
+    height:450px;
+
+    background:#0066ff;
+
+    bottom:-200px;
+    right:-200px;
+
+    border-radius:50%;
+
+    filter:blur(180px);
+
+    opacity:0.15;
+
+    animation:moveGlow2 10s linear infinite;
+
+    z-index:-1;
+}
+
+@keyframes moveGlow{
+
+    0%{
+        transform:translate(0,0);
+    }
+
+    50%{
+        transform:translate(80px,50px);
+    }
+
+    100%{
+        transform:translate(0,0);
+    }
+}
+
+@keyframes moveGlow2{
+
+    0%{
+        transform:translate(0,0);
+    }
+
+    50%{
+        transform:translate(-60px,-40px);
+    }
+
+    100%{
+        transform:translate(0,0);
+    }
+}
+
+/* =========================
+   NAVBAR PREMIUM
+========================= */
+
+.navbar{
+
+    position:sticky;
+    top:0;
+
+    z-index:1000;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.25);
+}
+
+/* ACTIVE NAV EFFECT */
+
+.dropdown a{
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.dropdown a::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:-100%;
+    top:0;
+
+    width:100%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.12),
+            transparent
+        );
+
+    transition:0.5s;
+}
+
+.dropdown a:hover::before{
+    left:100%;
+}
+
+/* =========================
+   HERO IMAGE EFFECT
+========================= */
+
+.hero img{
+
+    transition:0.5s ease;
+
+    position:relative;
+}
+
+.hero img:hover{
+
+    transform:
+        scale(1.02)
+        rotateX(2deg);
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.5),
+        0 0 40px rgba(0,255,200,0.15);
+}
+
+/* =========================
+   SEARCH BOX PREMIUM
+========================= */
+
+.search-box input{
+
+    transition:0.35s ease;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        inset 0 1px 1px rgba(255,255,255,0.05);
+}
+
+.search-box input:focus{
+
+    border-color:#00ffc8;
+
+    box-shadow:
+        0 0 0 4px rgba(0,255,200,0.08),
+        0 0 25px rgba(0,255,200,0.15);
+
+    transform:translateY(-2px);
+}
+
+/* =========================
+   BUTTON PREMIUM
+========================= */
+
+.search-box button,
+.next-btn button,
+.ai-card a,
+.card a{
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+/* SHINE EFFECT */
+
+.search-box button::before,
+.next-btn button::before,
+.ai-card a::before,
+.card a::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-100%;
+
+    width:100%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,0.4),
+            transparent
+        );
+
+    transition:0.7s;
+}
+
+.search-box button:hover::before,
+.next-btn button:hover::before,
+.ai-card a:hover::before,
+.card a:hover::before{
+
+    left:100%;
+}
+
+/* =========================
+   AI CARD ADVANCED
+========================= */
+
+.ai-card,
+.card{
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.ai-card::before,
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-2px;
+
+    background:
+        linear-gradient(
+            135deg,
+            transparent,
+            rgba(0,255,200,0.2),
+            transparent
+        );
+
+    opacity:0;
+
+    transition:0.5s;
+}
+
+.ai-card:hover::before,
+.card:hover::before{
+
+    opacity:1;
+}
+
+/* =========================
+   CARD HOVER
+========================= */
+
+.ai-card:hover,
+.card:hover{
+
+    transform:
+        translateY(-12px)
+        scale(1.02);
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.45),
+        0 0 30px rgba(0,255,200,0.08);
+}
+
+/* =========================
+   TEXT GLOW
+========================= */
+
+h1,
+.hero-text{
+
+    text-shadow:
+        0 0 15px rgba(0,255,200,0.3),
+        0 0 30px rgba(56,189,248,0.2);
+}
+
+/* =========================
+   FOOTER PREMIUM
+========================= */
+
+.footer{
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.footer::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:400px;
+    height:400px;
+
+    background:#00ffc8;
+
+    filter:blur(180px);
+
+    opacity:0.06;
+
+    top:-200px;
+    right:-100px;
+}
+
+/* =========================
+   FOOTER LINKS
+========================= */
+
+.footer-box a{
+
+    position:relative;
+}
+
+.footer-box a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    bottom:-2px;
+
+    width:0%;
+    height:2px;
+
+    background:#00ffc8;
+
+    transition:0.3s;
+}
+
+.footer-box a:hover::after{
+
+    width:100%;
+}
+
+/* =========================
+   PAGE ENTRY
+========================= */
+
+.container,
+.hero,
+.footer{
+
+    animation:pageFade 1s ease;
+}
+
+@keyframes pageFade{
+
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
