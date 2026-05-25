@@ -8,7 +8,139 @@
 </head>
 <body>
     <style>
+/* ================= LOGO EFFECT ================= */
 
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+/* LOGO IMAGE */
+
+.logo img{
+
+    width:55px;
+    height:55px;
+
+    border-radius:50%;
+    object-fit:cover;
+
+    padding:3px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff00ff,
+            #00f0ff,
+            #00ff99,
+            #ffcc00
+        );
+
+    background-size:300%;
+
+    animation:
+        logoGlow 5s linear infinite,
+        logoFloat 3s ease-in-out infinite;
+
+    box-shadow:
+        0 0 15px rgba(0,240,255,0.5),
+        0 0 35px rgba(255,0,255,0.35);
+
+    transition:0.4s ease;
+}
+
+/* HOVER EFFECT */
+
+.logo img:hover{
+
+    transform:
+        scale(1.12)
+        rotate(8deg);
+
+    box-shadow:
+        0 0 25px rgba(0,240,255,0.9),
+        0 0 55px rgba(255,0,255,0.6);
+}
+
+/* TEXT */
+
+.logo span{
+
+    font-size:28px;
+    font-weight:800;
+    letter-spacing:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00f0ff,
+            #ff00ff,
+            #00ff99
+        );
+
+    background-size:300%;
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    animation:textMove 5s linear infinite;
+}
+
+/* FLOAT */
+
+@keyframes logoFloat{
+
+    0%,100%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-6px);
+    }
+}
+
+/* GRADIENT MOVE */
+
+@keyframes logoGlow{
+
+    0%{
+        background-position:0%;
+    }
+
+    100%{
+        background-position:300%;
+    }
+}
+
+/* TEXT EFFECT */
+
+@keyframes textMove{
+
+    0%{
+        background-position:0%;
+    }
+
+    100%{
+        background-position:300%;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .logo img{
+
+        width:45px;
+        height:45px;
+    }
+
+    .logo span{
+
+        font-size:22px;
+    }
+}
     
     </style>
      
