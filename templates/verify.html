@@ -11,13 +11,17 @@
     <style>
         
 /* =========================
+   GOOGLE FONT
+========================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* =========================
    RESET
 ========================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial;
 }
 
 /* =========================
@@ -30,126 +34,251 @@ body {
     justify-content: center;
     align-items: center;
 
-    background: linear-gradient(135deg, #0f172a, #1e293b);
+    padding: 20px;
 
-    padding: 15px;
+    font-family: 'Poppins', sans-serif;
+
+    background:
+        radial-gradient(circle at top left, rgba(0,198,255,0.25), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(0,114,255,0.25), transparent 30%),
+        linear-gradient(135deg, #0f172a, #111827, #1e293b);
+
+    overflow: hidden;
 }
 
 /* =========================
-   CARD (VERIFY BOX)
+   OTP CARD
 ========================= */
 .card {
-    width: 100%;
-    max-width: 380px;
+    position: relative;
 
-    padding: 25px;
-    text-align: center;
+    width: 100%;
+    max-width: 420px;
+
+    padding: 35px 30px;
+
+    border-radius: 24px;
 
     background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.12);
 
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 
-    color: white;
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.4),
+        inset 0 1px 1px rgba(255,255,255,0.1);
 
-    animation: fadeIn 0.5s ease-in-out;
+    text-align: center;
+
+    animation: fadeUp 0.6s ease;
 }
 
-/* TITLE */
+/* TOP ICON */
+.card::before {
+    content: "🔐";
+
+    position: absolute;
+    top: -28px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+
+    font-size: 28px;
+
+    box-shadow: 0 10px 20px rgba(0,114,255,0.35);
+}
+
+/* =========================
+   HEADING
+========================= */
 .card h2 {
-    color: #00c6ff;
+    margin-top: 18px;
+    margin-bottom: 10px;
+
+    font-size: 28px;
+    font-weight: 700;
+
+    color: #ffffff;
+}
+
+.card p {
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+/* =========================
+   OTP INPUT BOXES
+========================= */
+.otp-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+
+    margin-top: 20px;
     margin-bottom: 10px;
 }
 
-/* TEXT */
-.card p {
-    color: #ccc;
-    font-size: 14px;
-}
+.otp-boxes input {
+    width: 55px;
+    height: 60px;
 
-/* =========================
-   OTP INPUT
-========================= */
-.card input {
-    width: 100%;
-    padding: 12px;
-    margin: 15px 0;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.12);
 
-    border: none;
-    border-radius: 8px;
     outline: none;
 
-    font-size: 16px;
+    background: rgba(255,255,255,0.08);
+    color: white;
+
+    font-size: 24px;
+    font-weight: 600;
+
     text-align: center;
-    letter-spacing: 5px;
+
+    transition: 0.3s ease;
+}
+
+.otp-boxes input::placeholder {
+    color: #94a3b8;
+}
+
+.otp-boxes input:focus {
+    border-color: #00c6ff;
+
+    box-shadow:
+        0 0 0 4px rgba(0,198,255,0.15),
+        0 0 15px rgba(0,198,255,0.2);
+
+    transform: translateY(-2px) scale(1.03);
 }
 
 /* =========================
-   BUTTON
+   VERIFY BUTTON
 ========================= */
 .card button {
     width: 100%;
-    padding: 12px;
 
-    background: #00c6ff;
+    margin-top: 18px;
+    padding: 15px;
+
     border: none;
-    border-radius: 8px;
+    border-radius: 14px;
 
-    font-weight: bold;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+
     cursor: pointer;
 
-    transition: 0.3s;
+    transition: 0.3s ease;
+
+    box-shadow: 0 10px 20px rgba(0,114,255,0.35);
 }
 
 .card button:hover {
-    background: #0072ff;
-    color: white;
+    transform: translateY(-3px);
+
+    box-shadow: 0 15px 25px rgba(0,114,255,0.45);
+}
+
+.card button:active {
+    transform: scale(0.98);
 }
 
 /* =========================
    TIMER
 ========================= */
 .timer {
+    margin-top: 18px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    color: #facc15;
+}
+
+/* =========================
+   RESEND TEXT
+========================= */
+.resend {
     margin-top: 15px;
-    font-weight: bold;
-    color: #ffcc00;
+
+    font-size: 14px;
+    color: #cbd5e1;
+}
+
+.resend a {
+    color: #00c6ff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.resend a:hover {
+    text-decoration: underline;
 }
 
 /* =========================
    ANIMATION
 ========================= */
-@keyframes fadeIn {
+@keyframes fadeUp {
     from {
         opacity: 0;
-        transform: scale(0.9);
+        transform: translateY(20px);
     }
+
     to {
         opacity: 1;
-        transform: scale(1);
+        transform: translateY(0);
     }
 }
 
 /* =========================
-   📱 MOBILE RESPONSIVE
+   MOBILE RESPONSIVE
 ========================= */
 @media (max-width: 480px) {
 
     body {
-        align-items: flex-start;
+        padding: 15px;
+        align-items: center;
     }
 
     .card {
-        margin-top: 50px;
-        max-width: 100%;
-        border-radius: 10px;
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+
+    .card h2 {
+        font-size: 24px;
     }
 
     .card input {
         font-size: 18px;
-        letter-spacing: 4px;
+        letter-spacing: 6px;
+        padding: 14px;
+    }
+
+    .card button {
+        padding: 14px;
     }
 }
+
+        
     </style>
 
 <div class="card">
@@ -157,12 +286,27 @@ body {
     <p>OTP sent to your email</p>
 
     <form method="POST" action="/verify">
-        <input type="hidden" name="email" value="{{ email }}">
 
-        <input type="text" id="otp" name="otp" placeholder="Enter OTP" required>
+    <input type="hidden" name="email" value="{{ email }}">
 
-        <button type="submit">Verify OTP</button>
-    </form>
+    <div class="otp-boxes">
+
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+
+    </div>
+
+    <input type="hidden" name="otp" id="finalOtp">
+
+    <button type="submit">
+        Verify OTP
+    </button>
+
+</form>
 
     <p class="timer" id="timer">60 sec remaining</p>
     <form method="POST" action="/resend">
@@ -174,7 +318,7 @@ body {
 </div>
 
 <script>
-let time = 60;
+let time = 90;
 let timer = document.getElementById("timer");
 let input = document.getElementById("otp");
 
