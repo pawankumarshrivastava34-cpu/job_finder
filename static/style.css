@@ -909,3 +909,90 @@ h1{
         padding:15px;
     }
 }
+
+/*========= Social Media Link ======= */
+/* SOCIAL LINKS */
+
+.social-links{
+
+    margin-top:18px;
+
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.social-links a{
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    width:fit-content;
+
+    padding:12px 18px;
+
+    border-radius:14px;
+
+    text-decoration:none;
+
+    background:rgba(255,255,255,0.06);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    color:white;
+
+    transition:0.35s;
+}
+
+/* ICON */
+
+.social-links i{
+
+    font-size:20px;
+}
+
+/* INSTAGRAM */
+
+.social-links a:nth-child(1):hover{
+
+    background:linear-gradient(
+        135deg,
+        #feda75,
+        #fa7e1e,
+        #d62976,
+        #962fbf,
+        #4f5bd5
+    );
+
+    transform:
+        translateY(-4px)
+        scale(1.04);
+
+    box-shadow:
+        0 10px 30px rgba(214,41,118,0.4);
+}
+
+/* FACEBOOK */
+
+.social-links a:nth-child(2):hover{
+
+    background:#1877f2;
+
+    transform:
+        translateY(-4px)
+        scale(1.04);
+
+    box-shadow:
+        0 10px 30px rgba(24,119,242,0.45);
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .social-links{
+
+        align-items:center;
+    }
+}
