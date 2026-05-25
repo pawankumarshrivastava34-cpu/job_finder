@@ -308,20 +308,130 @@ body {
 </div>
 
 <script>
+
+/* =========================
+   TIMER
+========================= */
+
 let time = 90;
-let timer = document.getElementById("timer");
-let input = document.getElementById("otp");
+
+const timer = document.getElementById("timer");
+
+const inputs = document.querySelectorAll(".otp-boxes input");
+
+const finalOtp = document.getElementById("finalOtp");
 
 let x = setInterval(() => {
+
     time--;
+
     timer.innerHTML = "⏳ " + time + " sec remaining";
 
     if(time <= 0){
+
         clearInterval(x);
+
         timer.innerHTML = "❌ OTP Expired";
-        input.disabled = true;
+
+        inputs.forEach(input => {
+
+            input.disabled = true;
+
+        });
+
     }
+
 }, 1000);
+
+
+/* =========================
+   OTP AUTO MOVE
+========================= */
+
+inputs.forEach((input, index) => {
+
+    input.addEventListener("input", (e) => {
+
+        // ONLY NUMBER
+        input.value = input.value.replace(/[^0-9]/g, "");
+
+        // NEXT BOX
+        if(input.value.length === 1){
+
+            if(index < inputs.length - 1){
+
+                inputs[index + 1].focus();
+
+            }
+
+        }
+
+        updateOtp();
+
+    });
+
+    // BACKSPACE
+    input.addEventListener("keydown", (e) => {
+
+        if(e.key === "Backspace" && input.value === ""){
+
+            if(index > 0){
+
+                inputs[index - 1].focus();
+
+            }
+
+        }
+
+    });
+
+});
+
+
+/* =========================
+   FINAL OTP VALUE
+========================= */
+
+function updateOtp(){
+
+    let otp = "";
+
+    inputs.forEach(input => {
+
+        otp += input.value;
+
+    });
+
+    finalOtp.value = otp;
+}
+
+
+/* =========================
+   PASTE SUPPORT
+========================= */
+
+inputs[0].addEventListener("paste", (e) => {
+
+    e.preventDefault();
+
+    const data = e.clipboardData
+        .getData("text")
+        .slice(0, inputs.length);
+
+    data.split("").forEach((value, i) => {
+
+        if(inputs[i]){
+
+            inputs[i].value = value;
+
+        }
+
+    });
+
+    updateOtp();
+
+});
+
 </script>
 
 </body>
