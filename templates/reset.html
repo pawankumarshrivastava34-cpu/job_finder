@@ -3,166 +3,335 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reset Password</title>
+<title>Forgot Password</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
 </head>
 <body>
     <style>
-        
-/* =========================
-   RESET
+ /* =========================
+   GOOGLE FONT
 ========================= */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* =========================
+   GLOBAL
+========================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-/* =========================
-   BODY
-========================= */
-body {
-    min-height: 100vh;
+body{
+    min-height:100vh;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-    background: linear-gradient(135deg, #0f172a, #1e293b);
+    padding:20px;
 
-    padding: 15px;
+    font-family:'Poppins',sans-serif;
+
+    background:
+        radial-gradient(circle at top left,
+        rgba(0,198,255,0.25), transparent 30%),
+
+        radial-gradient(circle at bottom right,
+        rgba(0,114,255,0.25), transparent 30%),
+
+        linear-gradient(135deg,#0f172a,#111827,#1e293b);
+
+    overflow:hidden;
 }
 
 /* =========================
    CARD
 ========================= */
-.card {
-    width: 100%;
-    max-width: 380px;
+.card{
 
-    padding: 25px;
-    text-align: center;
+    position:relative;
 
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(10px);
+    width:100%;
+    max-width:420px;
 
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    padding:40px 30px;
 
-    color: white;
+    border-radius:25px;
 
-    animation: fadeIn 0.5s ease-in-out;
+    background:rgba(255,255,255,0.08);
+
+    border:1px solid rgba(255,255,255,0.12);
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,0.4),
+        inset 0 1px 1px rgba(255,255,255,0.08);
+
+    text-align:center;
+
+    animation:fadeUp 0.6s ease;
 }
 
-/* TITLE */
-.card h2 {
-    color: #00c6ff;
-    margin-bottom: 10px;
+/* ICON */
+.card::before{
+
+    content:"🔐";
+
+    position:absolute;
+
+    top:-30px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:65px;
+    height:65px;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+
+    font-size:28px;
+
+    box-shadow:0 10px 25px rgba(0,114,255,0.4);
 }
 
-/* TEXT */
-.card p {
-    color: #ccc;
-    font-size: 14px;
+/* =========================
+   TITLE
+========================= */
+.card h2{
+
+    margin-top:15px;
+    margin-bottom:10px;
+
+    font-size:30px;
+    font-weight:700;
+
+    color:white;
+}
+
+.card p{
+
+    color:#cbd5e1;
+
+    font-size:14px;
+    line-height:1.7;
+
+    margin-bottom:25px;
 }
 
 /* =========================
    INPUT
 ========================= */
-.card input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
+.card input{
 
-    border: none;
-    border-radius: 8px;
+    width:100%;
 
-    outline: none;
-    font-size: 14px;
+    padding:15px;
+
+    margin-bottom:18px;
+
+    border:none;
+    outline:none;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,0.08);
+
+    border:1px solid rgba(255,255,255,0.12);
+
+    color:white;
+
+    font-size:15px;
+
+    transition:0.3s ease;
+}
+
+.card input::placeholder{
+    color:#94a3b8;
+}
+
+.card input:focus{
+
+    border-color:#00c6ff;
+
+    box-shadow:
+        0 0 0 4px rgba(0,198,255,0.12),
+        0 0 15px rgba(0,198,255,0.15);
+
+    transform:translateY(-2px);
 }
 
 /* =========================
    BUTTON
 ========================= */
-.card button {
-    width: 100%;
-    padding: 12px;
+.card button{
 
-    background: #00c6ff;
-    border: none;
-    border-radius: 8px;
+    width:100%;
 
-    font-weight: bold;
-    cursor: pointer;
+    padding:15px;
 
-    transition: 0.3s;
-    margin-top: 10px;
+    border:none;
+    border-radius:14px;
+
+    background:
+        linear-gradient(135deg,#00c6ff,#0072ff);
+
+    color:white;
+
+    font-size:16px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.3s ease;
+
+    box-shadow:
+        0 10px 20px rgba(0,114,255,0.35);
 }
 
-.card button:hover {
-    background: #0072ff;
-    color: white;
+.card button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 15px 30px rgba(0,114,255,0.45);
+}
+
+.card button:active{
+    transform:scale(0.98);
+}
+
+/* =========================
+   LINK
+========================= */
+.card a{
+
+    display:inline-block;
+
+    margin-top:18px;
+
+    color:#00c6ff;
+
+    text-decoration:none;
+
+    font-size:14px;
+    font-weight:500;
+
+    transition:0.3s;
+}
+
+.card a:hover{
+    color:white;
 }
 
 /* =========================
    ANIMATION
 ========================= */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
     }
-    to {
-        opacity: 1;
-        transform: scale(1);
+
+    to{
+        opacity:1;
+        transform:translateY(0);
     }
 }
 
 /* =========================
-   📱 MOBILE
+   LOADER
 ========================= */
-@media (max-width: 480px) {
 
-    body {
-        align-items: flex-start;
+.loader{
+
+    width:20px;
+    height:20px;
+
+    border:3px solid rgba(255,255,255,0.3);
+    border-top:3px solid white;
+
+    border-radius:50%;
+
+    animation:spin 0.7s linear infinite;
+
+    display:none;
+
+    margin:auto;
+}
+
+@keyframes spin{
+
+    100%{
+        transform:rotate(360deg);
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width:480px){
+
+    body{
+        padding:15px;
     }
 
-    .card {
-        margin-top: 50px;
-        max-width: 100%;
-        border-radius: 10px;
+    .card{
+
+        padding:35px 22px;
+
+        border-radius:20px;
+    }
+
+    .card h2{
+        font-size:24px;
+    }
+
+    .card p{
+        font-size:13px;
+    }
+
+    .card input{
+
+        padding:13px;
+
+        font-size:14px;
+    }
+
+    .card button{
+
+        padding:13px;
+
+        font-size:15px;
     }
 }
     </style>
 
 <div class="card">
-    <h2>🔒 Reset Password</h2>
-    <p>Enter new password</p>
+    <h2>🔐 Forgot Password</h2>
+    <p>Enter your email to receive OTP</p>
 
-    <form method="POST" action="/reset">
-        <input type="password" name="password" id="pass1" placeholder="New Password" required>
-        <input type="password" name="password" id="pass2" placeholder="Confirm Password" required>
-        <button type="submit">Reset Password</button>
+    <form method="POST">
+        <input type="email" name="email" placeholder="Enter Email" required>
+        <button type="submit" id="submitBtn">
+    <span class="btn-text">Send OTP</span>
+
+    <div class="loader"></div>
+</button>
     </form>
+
+    <a href="/login">Back to Login</a>
 </div>
-
-    <script>
-document.querySelector("form").addEventListener("submit", function(e){
-
-    let p1 = document.getElementById("pass1").value;
-    let p2 = document.getElementById("pass2").value;
-
-    if(p1 !== p2){
-        e.preventDefault();
-        alert("❌ Passwords do not match!");
-    }
-
-});
-
-</script>
 
 </body>
 </html>
