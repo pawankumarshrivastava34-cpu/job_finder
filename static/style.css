@@ -954,7 +954,7 @@ h1{
 
 /* INSTAGRAM */
 
-.social-links a:nth-child(1):hover{
+.social-links a.instagram:hover{
 
     background:linear-gradient(
         135deg,
@@ -975,7 +975,7 @@ h1{
 
 /* FACEBOOK */
 
-.social-links a:nth-child(2):hover{
+.social-links a.facebook:hover{
 
     background:#1877f2;
 
@@ -985,14 +985,4 @@ h1{
 
     box-shadow:
         0 10px 30px rgba(24,119,242,0.45);
-}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-    .social-links{
-
-        align-items:center;
-    }
 }
